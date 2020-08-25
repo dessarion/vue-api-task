@@ -6,8 +6,7 @@
         <tr>
           <th>#</th>
           <th>
-            <input />
-            <span>O</span>
+            <input v-model="finder" />            
           </th>
           <th>
             Price
@@ -44,7 +43,8 @@ import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      quote: "",      
+      quote: "",
+      finder: "",    
     };
   },
   computed: {
@@ -58,12 +58,21 @@ export default {
       const idx = quotes.indexOf(this.quote);
       return this.getList[idx];
     },
-    findByText(){      
-      return this.getFilteredList
+    findByText(){  
+      let display = this.getFilteredList
+      if(this.finder) {
+        this.getFilteredList.filter(c => {
+          if(c.slug === this.finder){
+           console.log(c);
+           display = {c}
+          }
+        })
+      }      
+      return display
     },
   },
   methods: {
-    ...mapActions(["fetchCrypto"]),   
+    ...mapActions(["fetchCrypto"]),      
   },
   async mounted() {
     this.fetchCrypto();
