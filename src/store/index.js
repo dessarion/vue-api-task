@@ -16,7 +16,7 @@ export default new Vuex.Store({
     },
     updateLoadingStatus(state, status) {
       state.loading = status
-    },
+    },    
   },
   actions: {
     async fetchCrypto({ commit }, limit = 4) {
@@ -27,7 +27,7 @@ export default new Vuex.Store({
           let qouteStr = '?CMC_PRO_API_KEY=' + key + '&start=1&limit=' + limit + '&convert=' + quotes[i]
           let response = await fetch('https://cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest' + qouteStr)
           let cryptoList = await response.json()
-          commit("updateList", cryptoList.data)
+          commit("updateList", cryptoList.data)         
         }
       }
       fetchIterator(this.state.quote)
@@ -50,5 +50,8 @@ export default new Vuex.Store({
     loadingStatus(state) {
       return state.loading
     },
+    getInfo(state) {
+      return state.infoBranch
+    }    
   },
 })
